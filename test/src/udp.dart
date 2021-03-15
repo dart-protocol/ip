@@ -27,8 +27,8 @@ void main() {
     });
 
     group("example #1", () {
-      List<int> exampleBytes;
-      UdpPacket example;
+      late List<int> exampleBytes;
+      late UdpPacket example;
 
       setUp(() {
         exampleBytes = [

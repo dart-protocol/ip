@@ -11,8 +11,8 @@ abstract class Packet extends SelfCodec {
 
 class Protocol {
   final String name;
-  final PacketFactory packetFactory;
-  final int ipProtocolNumber;
+  final PacketFactory? packetFactory;
+  final int? ipProtocolNumber;
 
   const Protocol(this.name, {this.packetFactory, this.ipProtocolNumber});
 }

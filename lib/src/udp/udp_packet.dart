@@ -44,8 +44,8 @@ class UdpPacket extends IpPayload {
       if (parent == null) {
         return otherParent == null;
       }
-      return parent.source == otherParent.source &&
-          parent.destination == otherParent.destination;
+      return parent.source == otherParent?.source &&
+          parent.destination == otherParent?.destination;
     } else {
       return false;
     }

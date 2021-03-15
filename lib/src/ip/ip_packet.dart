@@ -12,6 +12,8 @@ abstract class IpPacket<T extends IpAddress> extends Packet {
   /// Destination IP address.
   T destination;
 
+  IpPacket(this.source, this.destination);
+
   SelfEncoder payload = RawData.empty;
 
   /// IP version (4 or 6)
@@ -41,13 +43,13 @@ abstract class IpPacket<T extends IpAddress> extends Packet {
 abstract class IpPayload extends Packet {
   int get ipProtocolNumber;
 
-  IpPacket parentPacket;
+  IpPacket? parentPacket;
 
   IpPacket get _parentPacketOrThrow {
     if (parentPacket == null) {
       throw StateError("'parentPacket' is null");
     }
-    return parentPacket;
+    return parentPacket!;
   }
 
   IpAddress get sourceAddress => _parentPacketOrThrow.source;

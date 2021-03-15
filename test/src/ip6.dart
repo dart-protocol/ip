@@ -158,8 +158,8 @@ void main() {
     });
 
     group("example #1", () {
-      List<int> exampleBytes;
-      Ip6Packet example;
+      late List<int> exampleBytes;
+      late Ip6Packet example;
 
       setUp(() {
         exampleBytes = const [

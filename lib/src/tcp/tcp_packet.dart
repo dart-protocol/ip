@@ -107,7 +107,7 @@ class TcpPacket extends IpPayload {
     _v3 = transformUint32Bool(_v3, 21, value);
   }
 
-  int get maximumSegmentSize {
+  int? get maximumSegmentSize {
     final index = indexOfOption(optionCodeMaximumSegmentSize);
     if (index < 0) {
       return null;
@@ -115,9 +115,10 @@ class TcpPacket extends IpPayload {
     return optionsByteData.getUint16(index + 2);
   }
 
-  set maximumSegmentSize(int value) {
+  set maximumSegmentSize(int? value) {
+    assert(value != null);
     final i = setOptionWithLength(optionCodeMaximumSegmentSize, 4);
-    optionsByteData.setUint16(i + 2, value);
+    optionsByteData.setUint16(i + 2, value!);
   }
 
   Uint8List get optionsBytes {
@@ -140,7 +141,7 @@ class TcpPacket extends IpPayload {
   @override
   Protocol get protocol => tcp;
 
-  List<int> get selectiveAcknowledgement {
+  List<int>? get selectiveAcknowledgement {
     var i = indexOfOption(optionCodeSelectiveAcknowledgement);
     if (i < 0) {
       return null;
@@ -154,9 +155,10 @@ class TcpPacket extends IpPayload {
     return result;
   }
 
-  set selectiveAcknowledgement(List<int> value) {
+  set selectiveAcknowledgement(List<int>? value) {
+    assert(value != null);
     var i = setOptionWithLength(
-        optionCodeSelectiveAcknowledgement, 2 + 4 * value.length);
+        optionCodeSelectiveAcknowledgement, 2 + 4 * value!.length);
     i += 2;
     for (var item in value) {
       optionsByteData.setUint32(i, item);
@@ -183,7 +185,7 @@ class TcpPacket extends IpPayload {
     _v3 = transformUint32Bits(_v3, 0, 0xFFFF, value);
   }
 
-  int get windowScale {
+  int? get windowScale {
     final index = indexOfOption(optionCodeWindowScale);
     if (index < 0) {
       return null;
@@ -191,9 +193,10 @@ class TcpPacket extends IpPayload {
     return optionsByteData.getUint8(index + 2);
   }
 
-  set windowScale(int value) {
+  set windowScale(int? value) {
+    assert(value != null);
     final i = setOptionWithLength(optionCodeWindowScale, 3);
-    optionsByteData.setUint8(i + 2, value);
+    optionsByteData.setUint8(i + 2, value!);
   }
 
   @override
@@ -212,8 +215,8 @@ class TcpPacket extends IpPayload {
       if (parent == null) {
         return otherParent == null;
       }
-      return parent.source == otherParent.source &&
-          parent.destination == otherParent.destination;
+      return parent.source == otherParent?.source &&
+          parent.destination == otherParent?.destination;
     } else {
       return false;
     }

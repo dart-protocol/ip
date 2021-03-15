@@ -4,11 +4,11 @@ import 'package:ip/foundation.dart';
 import 'package:ip/ip.dart';
 import 'package:raw/raw.dart';
 
-import 'ip4_address.dart';
-
 const Protocol ipv4 = Protocol("IPv4");
 
 class Ip4Packet extends IpPacket<Ip4Address> {
+  Ip4Packet() : super(Ip4Address.zero, Ip4Address.zero);
+
   /// 4-byte span at index 0
   int _v0 = 0;
 
@@ -20,11 +20,6 @@ class Ip4Packet extends IpPacket<Ip4Address> {
 
   /// IPv4 options. Maximum length is 40 bytes.
   SelfEncoder options = RawData.empty;
-
-  Ip4Packet() {
-    source = Ip4Address.zero;
-    destination = Ip4Address.zero;
-  }
 
   /// 3-bit flags.
   int get flags => extractUint32Bits(_v1, 13, 0x3);
@@ -121,7 +116,7 @@ class Ip4Packet extends IpPacket<Ip4Address> {
 
     // Payload
     final payloadLength = 0xFFFF & _v0;
-    SelfEncoder payload;
+    SelfEncoder? payload;
     final protocol = ipProtocolMap[payloadProtocolNumber];
     if (protocol != null) {
       final packetFactory = protocol.packetFactory;
@@ -134,9 +129,7 @@ class Ip4Packet extends IpPacket<Ip4Address> {
         payload = packet;
       }
     }
-    if (payload == null) {
-      payload = RawData.decode(reader, payloadLength);
-    }
+    payload ??= RawData.decode(reader, payloadLength);
     super.payload = payload;
   }
 

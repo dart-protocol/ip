@@ -7,16 +7,13 @@ import 'ip6_address.dart';
 const Protocol ipv6 = Protocol("IPv6");
 
 class Ip6Packet extends IpPacket<Ip6Address> {
+  Ip6Packet() : super(Ip6Address.zero, Ip6Address.zero);
+
   /// 32 bits at index 0
   int _v0 = 0;
 
   /// 32 bits at index 4
   int _v1 = 1;
-
-  Ip6Packet() {
-    source = Ip6Address.zero;
-    destination = Ip6Address.zero;
-  }
 
   /// 20-bit flow label
   int get flowLabel => extractUint32Bits(_v0, 0, 0xFFFFF);
@@ -82,7 +79,7 @@ class Ip6Packet extends IpPacket<Ip6Address> {
 
     // Payload
     final payloadLength = _v1 >> 16;
-    SelfEncoder payload;
+    SelfEncoder? payload;
     final protocol = ipProtocolMap[payloadProtocolNumber];
     if (protocol != null) {
       final packetFactory = protocol.packetFactory;
@@ -95,12 +92,7 @@ class Ip6Packet extends IpPacket<Ip6Address> {
         payload = packet;
       }
     }
-    if (payload == null) {
-      payload = RawData.decode(
-        reader,
-        payloadLength,
-      );
-    }
+    payload ??= RawData.decode(reader, payloadLength);
     super.payload = payload;
   }
 

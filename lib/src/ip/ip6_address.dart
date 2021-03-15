@@ -76,12 +76,12 @@ class Ip6Address extends IpAddress {
     final bytes = this.toImmutableBytes();
 
     // Longest seen span
-    int longestStart = null;
-    int longestLength = 0;
+    int? longestStart;
+    var longestLength = 0;
 
     // Current span
-    int start = null;
-    int length = 0;
+    int? start;
+    var length = 0;
 
     // Iterate
     for (var i = 0; i < 16; i++) {

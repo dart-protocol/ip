@@ -77,8 +77,8 @@ void main() {
     });
 
     group("example #1", () {
-      List<int> exampleBytes;
-      Ip4Packet example;
+      late List<int> exampleBytes;
+      late Ip4Packet example;
 
       setUp(() {
         exampleBytes = const [

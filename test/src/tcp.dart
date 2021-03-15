@@ -30,8 +30,8 @@ void main() {
     });
 
     group("example #1", () {
-      List<int> exampleBytes;
-      TcpPacket example;
+      late List<int> exampleBytes;
+      late TcpPacket example;
 
       setUp(() {
         exampleBytes = <int>[
